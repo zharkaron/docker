@@ -9,19 +9,21 @@ fi
 cat <<EOF > $1.ovpn
 
 client
-remote your_server_ip 1194
-proto udp
+tls-client
+dev tun
+prot udp
+remote <Server IP Address> 1194
 resolv-retry infinite
-nobind
+no bind
 persist-key
 persist-tun
-dev tun
 ca ca.crt
-cert $1.crt
-key $1.crt
-cipher AES-256-CBC
-auth SHA256
+cert example.crt
+key client1.key
 tls-auth ta.key 1
+cipher AES-256-GCM
+remote-cert-tls server
+verb 3
 
 EOF
 
