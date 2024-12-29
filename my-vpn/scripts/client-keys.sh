@@ -6,7 +6,7 @@ if [ -z "$CLIENT_NAME" ]; then
 	exit 1
 fi
 
-cat << EOF > /client-keys/$CLIENT_NAME.ovpn
+cat << EOF > client-keys/$CLIENT_NAME.ovpn
 client
 tls-client
 dev tun
