@@ -1,12 +1,12 @@
 #!/bin/bash
 
 CLIENT_NAME=$1
-if [ -z "$CLIENT_NAME"]; then
+if [ -z "$CLIENT_NAME" ]; then
 	echo "Usage: $0 <client-name>"
 	exit 1
 fi
 
-cat << EOF > $1.ovpn
+cat << EOF > /client-keys/$CLIENT_NAME.ovpn
 client
 tls-client
 dev tun
@@ -20,7 +20,7 @@ ca ca.crt
 cert $CLIENT_NAME.crt
 key $CLIENT_NAME.key
 tls-auth ta.key 1
-cipher AES-256-GCM
+cipher AES-256-CBC
 remote-cert-tls server
 verb 3
 EOF
@@ -29,7 +29,7 @@ cd /etc/openvpn/easy-rsa
 ./easyrsa gen-req $CLIENT_NAME nopass
 ./easyrsa sign-req client $CLIENT_NAME
 
-file_path="~/docker/my-vpn/scripts/client-keys
+file_path="/home/raspberry/docker/my-vpn/scripts/client-keys"
 
 cp pki/issued/$CLIENT_NAME.crt $file_path
 cp pki/private/$CLIENT_NAME.key $file_path

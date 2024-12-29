@@ -33,7 +33,7 @@ cd /etc/openvpn/easy-rsa
 openvpn --genkey secret ta.key
 
 # Ensure the target directory exists
-file_path="~/docker/my-vpn/config"
+file_path="/home/raspberry/docker/my-vpn/config"
 # Copy files to the target directory
 cp /etc/openvpn/easy-rsa/pki/issued/server.crt $file_path
 cp /etc/openvpn/easy-rsa/pki/private/server.key $file_path
