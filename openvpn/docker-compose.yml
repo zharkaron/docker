@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  openvpn-server:
+    build: .
+    container_name: openvpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    ports:
+      - "443:443/tcp"
+    volumes:
+      - ./config:/etc/openvpn
+    restart: always
+    environment:
+      - OPENVPN_CONFIG_FILE=/etc/openvpn/server.conf
+    command: ["openvpn", "--config", "/etc/openvpn/server.conf"]
+    networks:
+      custom_bridge:
+        ipv4_address: 172.32.1.2
+
+networks:
+  custom_bridge:
+    external: true
+    name: custom-bridge
